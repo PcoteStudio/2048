@@ -1,0 +1,30 @@
+body {
+  color: rgb(196, 186, 170);
+  background-color: #1d1f20;
+}
+
+.board {
+  padding: 6px;
+  width: 504px;
+  height: 504px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  padding-left: 12px;
+  border-radius: 10px;
+  background-color: rgb(104, 89, 74);
+}
+
+.board div {
+  width: 120px;
+  height: 120px;
+  line-height: 2;
+  font-size: 60px;
+  margin-right: 6px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  margin-bottom: 6px;
+  color: rgb(196, 186, 170);
+  background: rgba(68, 50, 31, 0.35);
+}
