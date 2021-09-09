@@ -16,6 +16,18 @@ $(function () {
   let score = 0;
   let cells = [];
 
+  function saveBestScore() {
+    document.cookie = "best=" + best + ";";
+  }
+
+  function readBestScore() {
+    let savedBest = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("best="));
+    if (savedBest) savedBest = savedBest.split("=")[1];
+    if (savedBest) setBestScore(savedBest);
+  }
+
   function updateCellStyles() {
     for (let i = 0; i < cells.length; i++) {
       cells[i].className = "cell" + cells[i].innerHTML;
@@ -82,9 +94,13 @@ $(function () {
     score = newScore;
     scoreSpan.innerHTML = score;
     if (score > best) {
-      best = score;
-      bestSpan.innerHTML = best;
+      setBestScore(score);
     }
+  }
+
+  function setBestScore(bestScore) {
+    best = score;
+    bestSpan.innerHTML = best;
   }
 
   function combineCells(originIndex, targetIndex) {
@@ -223,12 +239,14 @@ $(function () {
         break;
     }
     if (hasMoved) {
+      saveBestScore();
       generateNewCell();
       updateCellStyles();
     }
   }
 
   // Game logic
+  readBestScore();
   createBoard();
   document.addEventListener("keydown", handleKeyDown);
   document.getElementById("newGame").addEventListener("click", function () {
