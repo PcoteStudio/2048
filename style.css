@@ -3,6 +3,48 @@ body {
   background-color: #1d1f20;
 }
 
+.header {
+  height: 100px;
+  width: 522px;
+  display:table-cell;
+  vertical-align:middle;
+}
+
+.header > h1 {
+  float: left;
+  font-size: 4em;
+  margin: 0;
+  color: rgb(196, 186, 170);
+}
+
+.scores {
+  float: right;
+  display: block;
+}
+
+.score-box {
+  margin-left: 4px;
+  padding: 12px 24px;
+  font-size: x-large;
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+  background-color: rgb(104, 89, 74);
+}
+
+.score-box > span {
+  display: block;
+  text-align: center;
+}
+
+.score-title {
+  font-variant: small-caps;
+}
+
+.score-value {
+  color: whitesmoke;
+}
+
 .board {
   padding: 6px;
   width: 504px;

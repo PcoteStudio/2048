@@ -2,7 +2,10 @@
 const WIDTH = 4;
 
 $(function () {
-  const board = $("#board");
+  const board = document.getElementById("board");
+  const scoreSpan = document.getElementById("score");
+  const bestSpan = document.getElementById("best");
+  let best = 0;
   let score = 0;
   let cells = [];
 
@@ -105,8 +108,12 @@ $(function () {
   }
 
   function setScore(newScore) {
-    // TODO: Display score
     score = newScore;
+    scoreSpan.innerHTML = score;
+    if (score > best) {
+      best = score;
+      bestSpan.innerHTML = best;
+    }
   }
 
   function combineCells(originIndex, targetIndex) {
