@@ -10,3 +10,4 @@ Use the arrow keys on your keyboard to move the cells towards a direction. Cells
 
 ![Screenshot of the game](https://i.imgur.com/8T87vVa.png)
 ![Screenshot of a game over](https://i.imgur.com/aMpTN34.png)
+![Screenshot the board's color scheme](https://i.imgur.com/T4n9Fh8.png)
