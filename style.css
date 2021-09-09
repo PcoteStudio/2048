@@ -15,7 +15,7 @@ body {
   float: left;
   font-size: 4em;
   margin: 0;
-  color: #C4BAAA;
+  color: #c4baaa;
 }
 
 .scores {
@@ -30,7 +30,7 @@ body {
   position: relative;
   display: inline-block;
   border-radius: 10px;
-  background-color: rgb(104, 89, 74);
+  background-color: #68594a;
 }
 
 .new-game-box {
@@ -85,6 +85,25 @@ body {
   border-radius: 3px;
   margin-bottom: 6px;
   color: whitesmoke;
+}
+
+.game-over-msg {
+  position: absolute;
+  margin-top: 180px;
+  margin-left: 170px;
+  font-size: xx-large;
+  font-weight: bold;
+  font-variant: small-caps;
+  color: whitesmoke;
+  opacity: 1;
+}
+
+.invisible {
+  display: none;
+}
+
+.game-over-board {
+  opacity: 0.3;
 }
 
 .cell,

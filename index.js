@@ -10,6 +10,7 @@ $(function () {
   const board = document.getElementById("board");
   const scoreSpan = document.getElementById("score");
   const bestSpan = document.getElementById("best");
+  const gameOverSpan = document.getElementById("game-over");
   let maxValue = 2;
   let maxGenerationIndex = 0;
   let best = 0;
@@ -48,6 +49,8 @@ $(function () {
   }
 
   function createBoard() {
+    gameOverSpan.classList.add("invisible");
+    board.classList.remove("game-over-board");
     setScore(0);
     maxValue = 2;
     maxGenerationIndex = 0;
@@ -66,7 +69,8 @@ $(function () {
   }
 
   function gameOver() {
-    console.log("Game over");
+    gameOverSpan.classList.remove("invisible");
+    board.classList.add("game-over-board");
   }
 
   function getEmptyCellsIndexes() {
