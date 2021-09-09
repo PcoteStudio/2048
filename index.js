@@ -123,14 +123,16 @@ $(function () {
 
   function moveUp() {
     let hasMoved = false;
-    // TODO: Create local list of combined cells, in order to avoid combining them again
+    let combinedIndexes = [];
 
     for (let i = WIDTH; i < WIDTH * WIDTH; ) {
       if (
         cells[i].innerHTML != "" &&
-        cells[i].innerHTML == cells[i - WIDTH].innerHTML
+        cells[i].innerHTML == cells[i - WIDTH].innerHTML &&
+        !combinedIndexes.includes(i - WIDTH)
       ) {
         combineCells(i, i - WIDTH);
+        combinedIndexes.push(i - WIDTH);
         hasMoved = true;
       } else if (cells[i].innerHTML != "" && cells[i - WIDTH].innerHTML == "") {
         moveCells(i, i - WIDTH);
@@ -147,14 +149,16 @@ $(function () {
 
   function moveDown() {
     let hasMoved = false;
-    console.log('-----------')
+    let combinedIndexes = [];
+
     for (let i = WIDTH * WIDTH - WIDTH - 1; i >= 0; ) {
-      console.log(i);
       if (
         cells[i].innerHTML != "" &&
-        cells[i].innerHTML == cells[i + WIDTH].innerHTML
+        cells[i].innerHTML == cells[i + WIDTH].innerHTML &&
+        !combinedIndexes.includes(i + WIDTH)
       ) {
         combineCells(i, i + WIDTH);
+        combinedIndexes.push(i + WIDTH);
         hasMoved = true;
       } else if (cells[i].innerHTML != "" && cells[i + WIDTH].innerHTML == "") {
         moveCells(i, i + WIDTH);
@@ -170,11 +174,17 @@ $(function () {
 
   function moveLeft() {
     let hasMoved = false;
+    let combinedIndexes = [];
+
     for (let i = 0; i < WIDTH * WIDTH; i++) {
       if (i % WIDTH == 0 || cells[i].innerHTML == "") continue;
 
-      if (cells[i].innerHTML == cells[i - 1].innerHTML) {
+      if (
+        cells[i].innerHTML == cells[i - 1].innerHTML &&
+        !combinedIndexes.includes(i - 1)
+      ) {
         combineCells(i, i - 1);
+        combinedIndexes.push(i - 1);
         hasMoved = true;
       } else if (cells[i - 1].innerHTML == "") {
         moveCells(i, i - 1);
@@ -187,11 +197,17 @@ $(function () {
 
   function moveRight() {
     let hasMoved = false;
+    let combinedIndexes = [];
+
     for (let i = WIDTH * WIDTH - 1; i >= 0; i--) {
       if ((i + 1) % WIDTH == 0 || cells[i].innerHTML == "") continue;
 
-      if (cells[i].innerHTML == cells[i + 1].innerHTML) {
+      if (
+        cells[i].innerHTML == cells[i + 1].innerHTML &&
+        !combinedIndexes.includes(i + 1)
+      ) {
         combineCells(i, i + 1);
+        combinedIndexes.push(i + 1);
         hasMoved = true;
       } else if (cells[i + 1].innerHTML == "") {
         moveCells(i, i + 1);
