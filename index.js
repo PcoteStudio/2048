@@ -16,6 +16,19 @@ $(function () {
   let score = 0;
   let cells = [];
 
+  function setScore(newScore) {
+    score = newScore;
+    scoreSpan.innerHTML = score;
+    if (score > best) {
+      setBestScore(score);
+    }
+  }
+
+  function setBestScore(bestScore) {
+    best = score;
+    bestSpan.innerHTML = best;
+  }
+
   function saveBestScore() {
     document.cookie = "best=" + best + ";";
   }
@@ -88,19 +101,6 @@ $(function () {
     );
     cells[emptyCells[randomCellId]].innerHTML = CELL_VALUES[randomValueId];
     if (isGameOver()) gameOver();
-  }
-
-  function setScore(newScore) {
-    score = newScore;
-    scoreSpan.innerHTML = score;
-    if (score > best) {
-      setBestScore(score);
-    }
-  }
-
-  function setBestScore(bestScore) {
-    best = score;
-    bestSpan.innerHTML = best;
   }
 
   function combineCells(originIndex, targetIndex) {
