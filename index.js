@@ -25,7 +25,7 @@ $(function () {
   }
 
   function setBestScore(bestScore) {
-    best = score;
+    best = bestScore;
     bestSpan.innerHTML = best;
   }
 
