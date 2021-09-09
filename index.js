@@ -53,13 +53,19 @@ $(function () {
     );
   }
 
+  function isGameOver() {
+    for (let i = 0; i < cells.length; i++) {
+      if (cells[i].innerHTML == "") return false; // Empty cell
+      if (i >= WIDTH && cells[i - WIDTH].innerHTML == cells[i].innerHTML)
+        return false; // Vertical combination
+      if (i % WIDTH != 0 && cells[i - 1].innerHTML == cells[i].innerHTML)
+        return false; // Horizontal combination
+    }
+    return true;
+  }
+
   function generateNewCell() {
     let emptyCells = getEmptyCellsIndexes();
-
-    if (emptyCells.length == 0) {
-      gameOver();
-      return;
-    }
 
     // Generate a new cell from possible values
     let randomCellId = Math.floor(Math.random() * emptyCells.length);
@@ -69,6 +75,7 @@ $(function () {
         Math.floor(Math.random() * (maxGenerationIndex + 1))
     );
     cells[emptyCells[randomCellId]].innerHTML = CELL_VALUES[randomValueId];
+    if (isGameOver()) gameOver();
   }
 
   function setScore(newScore) {
@@ -197,7 +204,6 @@ $(function () {
 
   function handleKeyDown(e) {
     let hasMoved = false;
-    console.log(e.keyCode)
     switch (e.keyCode) {
       case 37: // Left
       case 65: // A
