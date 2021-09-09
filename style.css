@@ -1,5 +1,5 @@
 body {
-  color: rgb(196, 186, 170);
+  color: whitesmoke;
   background-color: #1d1f20;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -7,15 +7,15 @@ body {
 .header {
   height: 100px;
   width: 522px;
-  display:table-cell;
-  vertical-align:middle;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .header > h1 {
   float: left;
   font-size: 4em;
   margin: 0;
-  color: rgb(196, 186, 170);
+  color: #C4BAAA;
 }
 
 .scores {
@@ -44,11 +44,11 @@ body {
   border-radius: 6px;
   font-weight: bold;
   color: whitesmoke;
-  background-color: rgb(137, 118, 98);
+  background-color: #897662;
 }
 
 .new-game-box:hover {
-  background-color: rgb(137, 118, 120);
+  background-color: #897678;
 }
 
 .score-box > span {
@@ -73,19 +73,126 @@ body {
   padding-top: 12px;
   padding-left: 12px;
   border-radius: 10px;
-  background-color: rgb(104, 89, 74);
+  background-color: #68594a;
 }
 
 .board div {
   width: 120px;
   height: 120px;
-  line-height: 2.4;
-  font-size: 50px;
   margin-right: 6px;
   font-weight: normal;
   text-align: center;
   border-radius: 3px;
   margin-bottom: 6px;
-  color: rgb(196, 186, 170);
-  background: rgba(68, 50, 31, 0.35);
+  color: whitesmoke;
+}
+
+.cell,
+.cell2,
+.cell4,
+.cell8,
+.cell16,
+.cell32,
+.cell64 {
+  font-size: 60px;
+  line-height: 2;
+}
+
+.cell128,
+.cell256,
+.cell512 {
+  font-size: 55px;
+  line-height: 2.2;
+}
+
+.cell1024,
+.cell2048,
+.cell4096,
+.cell8192 {
+  font-size: 50px;
+  line-height: 2.4;
+}
+
+.cell16384,
+.cell32768,
+.cell65536 {
+  font-size: 40px;
+  line-height: 3;
+}
+
+.cell131072 {
+  font-size: 34px;
+  line-height: 3.5;
+}
+
+.cell {
+  background-color: #44321f59;
+}
+
+.cell2 {
+  background-color: #44321f;
+}
+
+.cell4 {
+  background-color: #583c1c;
+}
+
+.cell8 {
+  background-color: #82501c;
+}
+
+.cell16 {
+  background-color: #965a19;
+}
+
+.cell32 {
+  background-color: #be5019;
+}
+
+.cell64 {
+  background-color: #d25019;
+}
+
+.cell128 {
+  background-color: #e65a19;
+}
+
+.cell256 {
+  background-color: #fa6419;
+}
+
+.cell512 {
+  background-color: #fa460f;
+}
+
+.cell1024 {
+  background-color: #fa320f;
+}
+
+.cell2048 {
+  background-color: #fa1e0f;
+}
+
+.cell4096 {
+  background-color: #fa003c;
+}
+
+.cell8192 {
+  background-color: #c8003c;
+}
+
+.cell16384 {
+  background-color: #a0003c;
+}
+
+.cell32768 {
+  background-color: #82003c;
+}
+
+.cell65536 {
+  background-color: #64003c;
+}
+
+.cell131072 {
+  background-color: #32003c;
 }

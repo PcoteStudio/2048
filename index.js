@@ -1,5 +1,9 @@
 // Constants
 const WIDTH = 4;
+const CELL_VALUES = [
+  2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768,
+  65536, 131072,
+];
 
 $(function () {
   const board = document.getElementById("board");
@@ -9,61 +13,9 @@ $(function () {
   let score = 0;
   let cells = [];
 
-  function updateCellColors() {
+  function updateCellStyles() {
     for (let i = 0; i < cells.length; i++) {
-      let color = "rgba(68, 50, 31, 0.35)";
-      switch (cells[i].innerHTML) {
-        case "2":
-          color = "rgb(68, 50, 31)";
-          break;
-        case "4":
-          color = "rgb(85, 66, 28)";
-          break;
-        case "8":
-          color = "rgb(152, 78, 14)";
-          break;
-        case "16":
-          color = "rgb(170, 65, 11)";
-          break;
-        case "32":
-          color = "rgb(173, 41, 10)";
-          break;
-        case "64":
-          color = "rgb(199, 44, 10)";
-          break;
-        case "128":
-          color = "rgb(156, 122, 20)";
-          break;
-        case "256":
-          color = "rgb(169, 133, 19)";
-          break;
-        case "512":
-          color = "rgb(181, 143, 19)";
-          break;
-        case "1024":
-          color = "rgb(194, 154, 18)";
-          break;
-        case "2048":
-          color = rgb(206, 164, 18);
-          break;
-        case "4096":
-          color = rgb(218, 175, 17);
-          break;
-        case "8192":
-          color = rgb(229, 185, 17);
-          break;
-        case "16384":
-          color = rgb(240, 196, 16);
-          break;
-        case "32768":
-          color = rgb(251, 206, 16);
-          break;
-        case "65536":
-        case "131072":
-          color = rgb(255, 217, 15);
-          break;
-      }
-      cells[i].style.backgroundColor = color;
+      cells[i].className = "cell" + cells[i].innerHTML;
     }
   }
 
@@ -80,7 +32,7 @@ $(function () {
 
     generateNewCell();
     generateNewCell();
-    updateCellColors();
+    updateCellStyles();
   }
 
   function gameOver() {
@@ -246,7 +198,7 @@ $(function () {
     }
     if (hasMoved) {
       generateNewCell();
-      updateCellColors();
+      updateCellStyles();
     }
   }
 
