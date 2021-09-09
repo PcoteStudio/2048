@@ -1,5 +1,6 @@
 // Constants
 const WIDTH = 4;
+const GENERATION_CHECKPOINTS = [32, 512, 8192, 131072];
 const CELL_VALUES = [
   2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768,
   65536, 131072,
@@ -9,6 +10,8 @@ $(function () {
   const board = document.getElementById("board");
   const scoreSpan = document.getElementById("score");
   const bestSpan = document.getElementById("best");
+  let maxValue = 2;
+  let maxGenerationIndex = 0;
   let best = 0;
   let score = 0;
   let cells = [];
@@ -21,6 +24,8 @@ $(function () {
 
   function createBoard() {
     setScore(0);
+    maxValue = 2;
+    maxGenerationIndex = 0;
     cells = [];
     board.innerHTML = "";
     for (let i = 0; i < WIDTH * WIDTH; i++) {
@@ -56,10 +61,14 @@ $(function () {
       return;
     }
 
-    // Generate new cell
-    // TODO: Add higher base numbers according to current score
-    let randomId = Math.floor(Math.random() * emptyCells.length);
-    cells[emptyCells[randomId]].innerHTML = 2;
+    // Generate a new cell from possible values
+    let randomCellId = Math.floor(Math.random() * emptyCells.length);
+    let randomValueId = Math.max(
+      0,
+      Math.floor(Math.random() * (maxGenerationIndex + 1)) -
+        Math.floor(Math.random() * (maxGenerationIndex + 1))
+    );
+    cells[emptyCells[randomCellId]].innerHTML = CELL_VALUES[randomValueId];
   }
 
   function setScore(newScore) {
@@ -76,6 +85,12 @@ $(function () {
     cells[targetIndex].innerHTML = newValue;
     cells[originIndex].innerHTML = "";
     setScore(score + newValue);
+
+    // Add new higher values that can be generated instead of just '2'
+    if (newValue > maxValue) {
+      maxValue = newValue;
+      if (GENERATION_CHECKPOINTS.includes(maxValue)) maxGenerationIndex++;
+    }
   }
 
   function moveCells(originIndex, targetIndex) {
@@ -182,17 +197,22 @@ $(function () {
 
   function handleKeyDown(e) {
     let hasMoved = false;
+    console.log(e.keyCode)
     switch (e.keyCode) {
       case 37: // Left
+      case 65: // A
         hasMoved |= moveLeft();
         break;
       case 38: // Up
+      case 87: // W
         hasMoved |= moveUp();
         break;
       case 39: // Right
+      case 68: // D
         hasMoved |= moveRight();
         break;
       case 40: // Down
+      case 83: // S
         hasMoved |= moveDown();
         break;
     }
