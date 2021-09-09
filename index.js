@@ -109,30 +109,61 @@ $(function () {
     score = newScore;
   }
 
+  function combineCells(originIndex, targetIndex) {
+    let newValue = parseInt(cells[targetIndex].innerHTML) * 2;
+    cells[targetIndex].innerHTML = newValue;
+    cells[originIndex].innerHTML = "";
+    setScore(score + newValue);
+  }
+
+  function moveCells(originIndex, targetIndex) {
+    cells[targetIndex].innerHTML = cells[originIndex].innerHTML;
+    cells[originIndex].innerHTML = "";
+  }
+
   function moveUp() {
     let hasMoved = false;
-    for (let i = WIDTH; i < WIDTH * WIDTH; i++) {
-      if (cells[i].innerHTML == "" || cells[i - WIDTH].innerHTML != "")
-        continue;
+    // TODO: Create local list of combined cells, in order to avoid combining them again
 
-      cells[i - WIDTH].innerHTML = cells[i].innerHTML;
-      cells[i].innerHTML = "";
-      hasMoved = true;
-      if (i >= WIDTH * 2) i -= WIDTH + 1;
+    for (let i = WIDTH; i < WIDTH * WIDTH; ) {
+      if (
+        cells[i].innerHTML != "" &&
+        cells[i].innerHTML == cells[i - WIDTH].innerHTML
+      ) {
+        combineCells(i, i - WIDTH);
+        hasMoved = true;
+      } else if (cells[i].innerHTML != "" && cells[i - WIDTH].innerHTML == "") {
+        moveCells(i, i - WIDTH);
+        hasMoved = true;
+        if (i >= WIDTH * 2) i -= WIDTH;
+      } else {
+        i += WIDTH;
+        if (i >= WIDTH * WIDTH && i != WIDTH * WIDTH + WIDTH - 1)
+          i -= WIDTH * WIDTH - WIDTH - 1;
+      }
     }
     return hasMoved;
   }
 
   function moveDown() {
     let hasMoved = false;
-    for (let i = WIDTH * WIDTH - WIDTH - 1; i >= 0; i--) {
-      if (cells[i].innerHTML == "" || cells[i + WIDTH].innerHTML != "")
-        continue;
-
-      cells[i + WIDTH].innerHTML = cells[i].innerHTML;
-      cells[i].innerHTML = "";
-      hasMoved = true;
-      if (i < WIDTH * WIDTH - WIDTH * 2) i += WIDTH + 1;
+    console.log('-----------')
+    for (let i = WIDTH * WIDTH - WIDTH - 1; i >= 0; ) {
+      console.log(i);
+      if (
+        cells[i].innerHTML != "" &&
+        cells[i].innerHTML == cells[i + WIDTH].innerHTML
+      ) {
+        combineCells(i, i + WIDTH);
+        hasMoved = true;
+      } else if (cells[i].innerHTML != "" && cells[i + WIDTH].innerHTML == "") {
+        moveCells(i, i + WIDTH);
+        hasMoved = true;
+        if (i < WIDTH * WIDTH - WIDTH * 2) i += WIDTH;
+      } else {
+        i -= WIDTH;
+        if (i < 0 && i != -WIDTH) i += WIDTH * WIDTH - WIDTH - 1;
+      }
     }
     return hasMoved;
   }
@@ -140,16 +171,16 @@ $(function () {
   function moveLeft() {
     let hasMoved = false;
     for (let i = 0; i < WIDTH * WIDTH; i++) {
-      if (
-        i % WIDTH == 0 ||
-        cells[i].innerHTML == "" ||
-        cells[i - 1].innerHTML != ""
-      )
-        continue;
-      cells[i - 1].innerHTML = cells[i].innerHTML;
-      cells[i].innerHTML = "";
-      hasMoved = true;
-      i -= 2;
+      if (i % WIDTH == 0 || cells[i].innerHTML == "") continue;
+
+      if (cells[i].innerHTML == cells[i - 1].innerHTML) {
+        combineCells(i, i - 1);
+        hasMoved = true;
+      } else if (cells[i - 1].innerHTML == "") {
+        moveCells(i, i - 1);
+        hasMoved = true;
+        i -= 2;
+      }
     }
     return hasMoved;
   }
@@ -157,68 +188,17 @@ $(function () {
   function moveRight() {
     let hasMoved = false;
     for (let i = WIDTH * WIDTH - 1; i >= 0; i--) {
-      if (
-        (i + 1) % WIDTH == 0 ||
-        cells[i].innerHTML == "" ||
-        cells[i + 1].innerHTML != ""
-      )
-        continue;
+      if ((i + 1) % WIDTH == 0 || cells[i].innerHTML == "") continue;
 
-      cells[i + 1].innerHTML = cells[i].innerHTML;
-      cells[i].innerHTML = "";
-      hasMoved = true;
-      i += 2;
+      if (cells[i].innerHTML == cells[i + 1].innerHTML) {
+        combineCells(i, i + 1);
+        hasMoved = true;
+      } else if (cells[i + 1].innerHTML == "") {
+        moveCells(i, i + 1);
+        hasMoved = true;
+        i += 2;
+      }
     }
-    return hasMoved;
-  }
-
-  function moveVertically(isUp) {
-    return isUp ? moveUp() : moveDown();
-  }
-
-  function moveHorizontally(isLeft) {
-    return isLeft ? moveLeft() : moveRight();
-  }
-
-  function combineVertically(isUp) {
-    // TODO: Manage priorities of combinations
-    let hasMoved = false;
-    hasMoved |= moveVertically(isUp);
-    for (let i = 0; i < WIDTH * WIDTH - WIDTH; i++) {
-      if (
-        cells[i].innerHTML == "" ||
-        cells[i].innerHTML != cells[i + WIDTH].innerHTML
-      )
-        continue;
-
-      let newValue = parseInt(cells[i].innerHTML) * 2;
-      cells[i].innerHTML = newValue;
-      cells[i + WIDTH].innerHTML = "";
-      setScore(score + newValue);
-      hasMoved = true;
-    }
-    hasMoved |= moveVertically(isUp);
-    return hasMoved;
-  }
-
-  function combineHorizontally(isLeft) {
-    // TODO: Manage priorities of combinations
-    let hasMoved = false;
-    hasMoved |= moveHorizontally(isLeft);
-    for (let i = 0; i < WIDTH * WIDTH - 1; i++) {
-      if (
-        cells[i].innerHTML == "" ||
-        cells[i].innerHTML != cells[i + 1].innerHTML
-      )
-        continue;
-
-      let newValue = parseInt(cells[i].innerHTML) * 2;
-      cells[i].innerHTML = newValue;
-      cells[i + 1].innerHTML = "";
-      setScore(score + newValue);
-      hasMoved = true;
-    }
-    hasMoved |= moveHorizontally(isLeft);
     return hasMoved;
   }
 
@@ -226,16 +206,16 @@ $(function () {
     let hasMoved = false;
     switch (e.keyCode) {
       case 37: // Left
-        hasMoved |= combineHorizontally(true);
+        hasMoved |= moveLeft();
         break;
       case 38: // Up
-        hasMoved |= combineVertically(true);
+        hasMoved |= moveUp();
         break;
       case 39: // Right
-        hasMoved |= combineHorizontally(false);
+        hasMoved |= moveRight();
         break;
       case 40: // Down
-        hasMoved |= combineVertically(false);
+        hasMoved |= moveDown();
         break;
     }
     if (hasMoved) {
