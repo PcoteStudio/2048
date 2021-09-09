@@ -68,6 +68,9 @@ $(function () {
   }
 
   function createBoard() {
+    setScore(0);
+    cells = [];
+    board.innerHTML = "";
     for (let i = 0; i < WIDTH * WIDTH; i++) {
       cell = document.createElement("div");
       cell.innerHTML = "";
@@ -250,4 +253,7 @@ $(function () {
   // Game logic
   createBoard();
   document.addEventListener("keydown", handleKeyDown);
+  document.getElementById("newGame").addEventListener("click", function () {
+    createBoard();
+  });
 });

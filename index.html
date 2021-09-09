@@ -11,6 +11,22 @@
       <div class="header">
         <h1>2048</h1>
         <div class="scores">
+          <div
+            id="newGame"
+            class="new-game-box"
+            style="
+              -moz-user-select: none;
+              -webkit-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              -o-user-select: none;
+            "
+            unselectable="on"
+            onselectstart="return false;"
+            onmousedown="return false;"
+          >
+            <a>New game</a>
+          </div>
           <div class="score-box">
             <span class="score-title">Score</span>
             <span id="score" class="score-value">0</span>
