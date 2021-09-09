@@ -30,7 +30,7 @@ $(function () {
   }
 
   function saveBestScore() {
-    document.cookie = "best=" + best + ";";
+    document.cookie = "best=" + best + "; SameSite=Strict; maxAge=2147483647";
   }
 
   function readBestScore() {
