@@ -7,10 +7,10 @@ const CELL_VALUES = [
 ];
 
 $(function () {
-  const board = document.getElementById("board");
-  const scoreSpan = document.getElementById("score");
-  const bestSpan = document.getElementById("best");
-  const gameOverSpan = document.getElementById("game-over");
+  const board = $("#board")[0];
+  const scoreSpan = $("#score")[0];
+  const bestSpan = $("#best")[0];
+  const gameOverSpan = $("#game-over")[0];
   let maxValue = 2;
   let maxGenerationIndex = 0;
   let best = 0;
@@ -252,8 +252,8 @@ $(function () {
   // Game logic
   readBestScore();
   createBoard();
-  document.addEventListener("keydown", handleKeyDown);
-  document.getElementById("newGame").addEventListener("click", function () {
+  document.onkeydown = handleKeyDown;
+  $("#newGame").on("click", function () {
     createBoard();
   });
 });
